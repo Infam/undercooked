@@ -1,4 +1,4 @@
-class Item{
+public class Item{
 	private int cut; //0 = uncut, 1 = cut
 	private int cooklvl; //0 = raw, 1 = cooked, 2 = burnt
 	private String name;
