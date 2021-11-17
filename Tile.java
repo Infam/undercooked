@@ -1,8 +1,10 @@
+import java.util.List;
+
 public class Tile{
 	private int[] position;
 	private int type;
 	private String dispenserDesc; //If dispenser, item's description.
-
+	private List<String> items;
 	private Item item;
 
 	private Strategy strategy;
@@ -17,6 +19,8 @@ public class Tile{
 			strategy = new Grill();
 		if (type == 4)
 			strategy = new GarbageDisposal();
+		if (type == 5)
+			strategy = new Assembler();
 
 	}
 
@@ -48,6 +52,10 @@ public class Tile{
 	public void setPosition(int x,int y){
 		position[0] = x;
 		position[1] = y;
+	}
+
+	public void addItem(Item item){
+		items.add(item.getName()+","+item.getCut()+","+item.getCook());
 	}
 	
 	//Getters

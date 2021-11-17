@@ -43,4 +43,12 @@ class GarbageDisposal implements Strategy{
     }
 }
 
+class Assembler implements Strategy{
+    public void action(Tile t){
+        if(t.getItem() != null){
+            t.addItem(t.getItem());
+        }
+    }
+}
+
 //https://stackoverflow.com/questions/36894487/java-gui-how-to-move-a-ball-using-wasd-keys

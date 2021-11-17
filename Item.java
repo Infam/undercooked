@@ -24,4 +24,15 @@ public class Item{
 	//Setters
 	
 	//Getters
+	public String getName(){
+		return name;
+	}
+
+	public int getCut(){
+		return cut;
+	}
+
+	public int getCook(){
+		return cooklvl;
+	}
 }
