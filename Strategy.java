@@ -42,3 +42,5 @@ class GarbageDisposal implements Strategy{
         }
     }
 }
+
+//https://stackoverflow.com/questions/36894487/java-gui-how-to-move-a-ball-using-wasd-keys

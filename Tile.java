@@ -8,7 +8,7 @@ public class Tile{
 	private Strategy strategy;
 
 	public Tile(int type, int x, int y){
-		type = type;
+		this.type = type;
 		if (type == 0)
 			strategy = new Floor();
 		if (type == 2)

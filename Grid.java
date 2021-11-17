@@ -1,4 +1,4 @@
-class Grid{
+public class Grid{
 	private int[][] worldgrid;
 	private Tile[][] worldtiles;
 	private int[] playerpos;
