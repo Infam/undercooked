@@ -34,4 +34,7 @@ public class Grid{
 	/*public int[] getPlayerPos(){
 		return player.getPlayerPos();
 	}*/
+	public Tile getTile(int x, int y){
+		return worldtiles[y][x];
+	}
 }

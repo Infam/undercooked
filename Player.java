@@ -4,12 +4,14 @@ import java.awt.event.KeyEvent;
 public class Player {
 
     private int[] pos;
-    private Tile facing;
+    private Tile facingtile;
+    private int facingdir;
     private Item food;
 
-    public Player(int[] startingPos, Tile facing){
+    public Player(int[] startingPos, int facingdir, Tile facing){
         this.pos = startingPos;
-        this.facing = facing;
+        this.facingtile = facing;
+        this.facingdir = facingdir;
     }
     
     public void movePos(KeyEvent e) {
@@ -41,7 +43,7 @@ public class Player {
 
     public void action(KeyEvent e){
         if(e.getKeyCode() == KeyEvent.VK_2){
-            facing.action();
+            facingtile.action();
         }
     }
 
@@ -50,7 +52,8 @@ public class Player {
         return pos;
     }
 
-    public Tile getDirectionFacing(){
-        return facing;
+    public int getDirectionFacing(){
+        return facingdir;
     }
+    public Tile getTileFacing(){return facingtile;}
 }

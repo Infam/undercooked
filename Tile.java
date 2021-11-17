@@ -21,11 +21,14 @@ public class Tile{
 			strategy = new GarbageDisposal();
 		if (type == 5)
 			strategy = new Assembler();
+		position = new int[2];
+		position[0] = x;
+		position[1] = y;
 
 	}
 
 	public Tile(int type, int x, int y,String desc){ //dispenser will by type 1
-		type = 1;
+		this.type = type;
 		this.dispenserDesc = desc;
 		strategy = new Dispenser();
 	}
