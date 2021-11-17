@@ -1,14 +1,14 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Store {
+public class Store implements StoreInterface{
     private double register;
     private List<Order> ordered;
     private List<Order> served;
     private Grid grid;
     private Player player;
     private OrderFactory orderFactory;
-    //private Observer[] observers;
+    private List<Observer> observers;
 
     public Store(){
         this.register = 0.0;
@@ -17,6 +17,7 @@ public class Store {
         this.orderFactory = new OrderFactory();
         this.ordered = new ArrayList<>();
         this.served = new ArrayList<>();
+        this.observers = new ArrayList<>();
     }
 
     public void resetStore(){
@@ -45,4 +46,17 @@ public class Store {
         this.player = new Player(pos, facing, facingtile);
     }
 
+    public void registerObserver(Observer o){
+        observers.add(o);
+    }
+
+    public void removeObserver(Observer o){
+        observers.remove(o);
+    }
+
+    public void notifyObservers(){
+        for (Observer observer : observers) {
+            observer.update();
+        }
+    }
 }

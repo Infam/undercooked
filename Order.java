@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Order {
@@ -29,6 +30,7 @@ public abstract class Order {
 
 class Burger extends Order{
     public Burger(){
+        this.items = new ArrayList<>();
         this.price = 1.00;
     }
 }

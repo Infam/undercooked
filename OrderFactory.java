@@ -1,6 +1,7 @@
 public class OrderFactory {
     public Order createOrder(){
         Order burger = new Burger();
+        burger = addBun(burger);
         for(int i = 0; i<Utility.poisson(4); i++){
             if(Utility.percentage(0.25)){
                 burger = addPatty(burger);

@@ -47,6 +47,10 @@ public class Player {
         }
     }
 
+    public void moveLeft(){
+
+    }
+
     //Getters
     public int[] getPlayerPos(){
         return pos;

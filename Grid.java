@@ -3,6 +3,8 @@ public class Grid{
 	private Tile[][] worldtiles;
 	//private int[] playerpos;
 	private Player player;
+	private int width;
+	private int height;
 
 	public Grid(){
 		worldgrid = new int[][]
@@ -24,7 +26,8 @@ public class Grid{
 					worldtiles[i][j] = new Tile(worldgrid[i][j], i, j);
 			}
 		}
-
+		this.width = worldgrid.length;
+		this.height = worldgrid[0].length;
 	}
 	
 	//-----------------------------------
@@ -37,4 +40,7 @@ public class Grid{
 	public Tile getTile(int x, int y){
 		return worldtiles[y][x];
 	}
+
+	public int getWidth(){return width;}
+	public int getHeight(){return height;}
 }
