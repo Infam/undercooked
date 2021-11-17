@@ -64,11 +64,20 @@ class Lettuce extends OrderDecorator{
     }
 }
 
-class Tomato extends OrderDecorator{
-    public Tomato(Order order, int cut, int cook){
+class Tomato extends OrderDecorator {
+    public Tomato(Order order, int cut, int cook) {
         this.order = order;
         this.price = order.getPrice() + 0.25;
         this.items = order.items;
-        items.add("Tomato,"+cut+","+cook);
+        items.add("Tomato," + cut + "," + cook);
+    }
+}
+
+class Cheese extends OrderDecorator {
+    public Cheese(Order order, int cut, int cook) {
+        this.order = order;
+        this.price = order.getPrice() + 0.25;
+        this.items = order.items;
+        items.add("Cheese," + cut + "," + cook);
     }
 }
