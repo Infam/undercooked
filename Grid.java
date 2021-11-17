@@ -1,8 +1,8 @@
 public class Grid{
 	private int[][] worldgrid;
 	private Tile[][] worldtiles;
-	private int[] playerpos;
-	//private Player player;
+	//private int[] playerpos;
+	private Player player;
 
 	public Grid(){
 		worldgrid = new int[][]
@@ -29,9 +29,9 @@ public class Grid{
 	
 	//-----------------------------------
 	//Setters
-
+	
 	//Getters
-	public int[] getPlayerPos(){
-		return playerpos;
-	}
+	/*public int[] getPlayerPos(){
+		return player.getPlayerPos();
+	}*/
 }

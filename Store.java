@@ -3,7 +3,7 @@ public class Store {
     private Order[] ordered;
     private Order[] served;
     private Grid grid;
-    //private Player player;
+    private Player player;
     private OrderFactory orderFactory;
     //private Observer[] observers;
 
