@@ -15,19 +15,19 @@ public class Player {
     }
 
     public void moveLeft(){
-        pos[0]--;
-    }
-
-    public void moveRight(){
-        pos[0]++;
-    }
-
-    public void moveUp(){
         pos[1]--;
     }
 
-    public void moveDown(){
+    public void moveRight(){
         pos[1]++;
+    }
+
+    public void moveUp(){
+        pos[0]--;
+    }
+
+    public void moveDown(){
+        pos[0]++;
     }
 
     public void interact(){
@@ -35,10 +35,11 @@ public class Player {
     }
 
     public void place(){
-        if(item != null){
+        if(item != null){ //if holding someting
             facingtile.holdingPlace(this);
         }
         else {
+	    System.out.println("Player is not holding anything. Trying to pick something up...");
             facingtile.emptyPlace(this);
         }
 

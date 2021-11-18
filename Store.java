@@ -25,6 +25,34 @@ public class Store implements Subject {
 
     }
 
+    public static void main(String[] args){
+	    Store s = new Store();
+	    s.newOrder();
+	    Player p = s.getPlayer();
+	    s.printGrid();
+	    System.out.println("Moving Up:");
+	    p.moveUp();
+	    s.printGrid();
+	    System.out.println("Moving Down:");
+	    p.moveDown();
+	    s.printGrid();
+	    System.out.println("Moving Left:");
+	    p.moveLeft();
+	    s.printGrid();
+	    System.out.println("Moving Right:");
+	    p.moveRight();
+	    s.printGrid();
+	    System.out.println("Getting Lettuce from dispenser:");
+	    p.moveUp();
+	    s.printGrid();
+	    p.interact();
+	    p.place();
+	    System.out.println("Player is holding: " + p.getItem().getName());
+	    s.printGrid();
+
+    }
+
+
     public void initPlayer(int x, int y, int facing){ //facing:{0,1,2,3} = {up, down, left, right}
         int[] pos;
         Tile facingtile;
@@ -52,7 +80,7 @@ public class Store implements Subject {
         if(order.equals(items)){
             return score;
         }
-        return 100;//TODO: Scoring system
+        return 100; //TODO: Scoring system
 
     }
 
@@ -85,11 +113,14 @@ public class Store implements Subject {
     public void printGrid(){
         int[][] grid2d = grid.getGrid();
         int[] ppos = player.getPos();
-        grid2d[ppos[0]][ppos[1]] = 8;
+        //grid2d[ppos[0]][ppos[1]] = 8;
 
         for(int i = 0; i<grid.getWidth(); i++){
             for(int j = 0; j<grid.getHeight(); j++){
-                System.out.print(grid2d[i][j]+"\t");
+		    if ((i == ppos[0]) && (j == ppos[1]))
+                	System.out.print("X\t");
+		    else
+                	System.out.print(grid2d[i][j]+"\t");
             }
             System.out.println("");
         }
