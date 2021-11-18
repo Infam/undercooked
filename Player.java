@@ -5,29 +5,53 @@ public class Player {
 
     private int[] pos;
     private Tile facingtile;
-    private int facingdir;
+    private int facingdir; //facing:{0,1,2,3} = {up, down, left, right}
     private Item item;
+    private Store store;
 
-    public Player(int[] startingPos, int facingdir, Tile facing){
+    public Player(Store store, int[] startingPos, int facingdir, Tile facing){
         this.pos = startingPos;
         this.facingtile = facing;
         this.facingdir = facingdir;
+        this.store = store;
     }
 
     public void moveLeft(){
         pos[1]--;
+        facingdir = 2;
+        updateFacingTile();
     }
 
     public void moveRight(){
         pos[1]++;
+        facingdir = 3;
+        updateFacingTile();
     }
 
     public void moveUp(){
         pos[0]--;
+        facingdir = 0;
+        updateFacingTile();
     }
 
     public void moveDown(){
         pos[0]++;
+        facingdir = 1;
+        updateFacingTile();
+    }
+
+    public void updateFacingTile(){
+        int x = pos[1];
+        int y = pos[0];
+        switch (facingdir) {
+            case (0) -> y--;
+            case (1) -> y++;
+            case (2) -> x--;
+            case (3) -> x++;
+            default -> {
+            }
+        }
+        facingtile = store.getGrid().getTile(x,y);
     }
 
     public void interact(){

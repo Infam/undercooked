@@ -67,7 +67,7 @@ public class Store implements Subject {
             case (3) -> grid.getTile(x + 1, y);
             default -> grid.getTile(x, y + 1);
         };
-        this.player = new Player(pos, facing, facingtile);
+        this.player = new Player(this, pos, facing, facingtile);
     }
 
     public void newOrder(){
@@ -110,6 +110,10 @@ public class Store implements Subject {
         return player;
     }
 
+    public Grid getGrid(){
+        return grid;
+    }
+
     public void printGrid(){
         int[][] grid2d = grid.getGrid();
         int[] ppos = player.getPos();
@@ -122,7 +126,7 @@ public class Store implements Subject {
 		    else
                 	System.out.print(grid2d[i][j]+"\t");
             }
-            System.out.println("");
+            System.out.println();
         }
     }
 
