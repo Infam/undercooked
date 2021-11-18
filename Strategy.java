@@ -67,9 +67,6 @@ class GarbageDisposal implements Strategy {
             t.setItem(null);
         }
     }
-    public void place (Tile t, Player p){
-        p.setItem(null);
-    }
 
     public void swap(Tile t, Player p){}
 
