@@ -44,11 +44,42 @@ public class Store implements Subject {
 	    s.printGrid();
 	    System.out.println("Getting Lettuce from dispenser:");
 	    p.moveUp();
-	    s.printGrid();
 	    p.interact();
 	    p.place();
 	    System.out.println("Player is holding: " + p.getItem().getName());
 	    s.printGrid();
+
+	    System.out.println("Cutting lettuce at cutting board:");
+	    p.moveDown();
+	    p.moveRight();
+	    p.moveUp();
+	    s.printGrid();
+	    p.place();
+	    p.interact();
+	    p.place();
+	    System.out.println("Player is holding: " + p.getItem().getName());
+	    System.out.println("Item cut level: " + p.getItem().getCut());
+
+	    System.out.println("Grilling lettuce at grill:");
+	    p.moveDown();
+	    p.moveDown();
+	    p.moveDown();
+	    s.printGrid();
+	    p.place();
+	    p.interact();
+	    p.place();
+	    System.out.println("Player is holding: " + p.getItem().getName());
+	    System.out.println("Item grill level: " + p.getItem().getCook());
+
+	    System.out.println("Throwing lettuce away:");
+	    p.moveUp();
+	    p.moveRight();
+	    p.moveDown();
+	    s.printGrid();
+	    p.place();
+	    p.interact();
+	    p.place();
+	    System.out.println("Player is holding: " + p.getItem());
 
     }
 
