@@ -69,4 +69,39 @@ public class Store implements Subject {
             observer.update();
         }
     }
+    //Setters
+    public void setRegister(double register){this.register = register;}
+
+
+    //Getters
+    public List<Order> getOrdered(){
+        return ordered;
+    }
+
+    public Player getPlayer(){
+        return player;
+    }
+
+    public void printGrid(){
+        int[][] grid2d = grid.getGrid();
+        int[] ppos = player.getPos();
+        grid2d[ppos[0]][ppos[1]] = 8;
+
+        for(int i = 0; i<grid.getWidth(); i++){
+            for(int j = 0; j<grid.getHeight(); j++){
+                System.out.print(grid2d[i][j]+"\t");
+            }
+            System.out.println("");
+        }
+    }
+
+    /*
+        private double register;
+    private List<Order> ordered;
+    private List<Order> served;
+    private Grid grid;
+    private Player player;
+    private OrderFactory orderFactory;
+    private List<Observer> observers;
+     */
 }

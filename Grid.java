@@ -45,6 +45,9 @@ public class Grid{
 	public Tile getTile(int x, int y){
 		return worldtiles[y][x];
 	}
+	public int[][] getGrid(){
+		return worldgrid;
+	}
 
 	public int getWidth(){return width;}
 	public int getHeight(){return height;}
