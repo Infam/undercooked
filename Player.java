@@ -44,46 +44,13 @@ public class Player {
 
     }
 
-    
-    public void movePos(KeyEvent e) {
-        int c = e.getKeyCode();
-        if(c == KeyEvent.VK_UP){                
-            pos[1]--;
-        } 
-        else if(c == KeyEvent.VK_DOWN){                
-            pos[1]++;   
-        } 
-        else if(c == KeyEvent.VK_LEFT){                
-            pos[0]--;   
-        } 
-        else if(c == KeyEvent.VK_RIGHT){                
-            pos[0]++;   
-        }
-    }
-
-    public void grabOrPlace(KeyEvent e){
-        if(e.getKeyCode() == KeyEvent.VK_1){
-            if(item.getInHand() == true){
-                item.dropped();
-            }
-            else{
-                item.pickedUP();
-            }
-        }
-    }
-
-    public void action(KeyEvent e){
-        if(e.getKeyCode() == KeyEvent.VK_2){
-            facingtile.action();
-        }
-    }
     //Setters
     public void setItem(Item item){
         this.item = item;
     }
 
     //Getters
-    public int[] getPlayerPos(){
+    public int[] getPos(){
         return pos;
     }
 
@@ -91,8 +58,8 @@ public class Player {
         return item;
     }
 
-    public int getDirectionFacing(){
+    public int getFacingDirection(){
         return facingdir;
     }
-    public Tile getTileFacing(){return facingtile;}
+    public Tile getFacingTile(){return facingtile;}
 }

@@ -8,6 +8,7 @@ public class Tile{
 	private List<String> items;
 	private Item item;
 	private Strategy strategy;
+	private Store store;
 
 	public Tile(int type, int x, int y){
 		this.type = type;
@@ -19,8 +20,6 @@ public class Tile{
 			strategy = new Grill();
 		if (type == 4)
 			strategy = new GarbageDisposal();
-		if (type == 5)
-			strategy = new Assembler();
 		if (type == 6)
 			strategy = new Counter();
 		position = new int[2];
@@ -33,6 +32,12 @@ public class Tile{
 		this.type = type;
 		this.dispenserDesc = desc;
 		strategy = new Dispenser();
+	}
+
+	public Tile(int type, int x, int y, Store store){
+		this.type = type;
+		this.store = store;
+		strategy = new Assembler();
 	}
 
 
@@ -53,6 +58,10 @@ public class Tile{
 		if(item != null){
 			strategy.pickup(this, player);
 		}
+	}
+
+	public void orderUp(){
+		store.serveOrder(items );
 	}
 
 	//-----------------------------------

@@ -1,5 +1,5 @@
 public class Controller {
-    StoreInterface store;
+    Store store;
     //View view;
 
     public Controller(){

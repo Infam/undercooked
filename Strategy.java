@@ -75,7 +75,7 @@ class GarbageDisposal implements Strategy {
 
 class Assembler implements Strategy {
     public void action(Tile t){
-        //t.orderup();
+        t.orderUp();
     }
 
     public void place(Tile t, Player p){

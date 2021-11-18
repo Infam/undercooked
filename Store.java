@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Store implements StoreInterface{
+public class Store implements Subject {
     private double register;
     private List<Order> ordered;
     private List<Order> served;
@@ -11,21 +11,17 @@ public class Store implements StoreInterface{
     private List<Observer> observers;
 
     public Store(){
-        this.register = 0.0;
-        this.grid = new Grid();
-        initPlayer(2,4, 1);
-        this.orderFactory = new OrderFactory();
-        this.ordered = new ArrayList<>();
-        this.served = new ArrayList<>();
-        this.observers = new ArrayList<>();
+        initStore();
     }
 
-    public void resetStore(){
+    public void initStore(){
         register = 0.0;
-        grid = new Grid();
+        grid = new Grid(this);
         initPlayer(2,4,1);
         ordered = new ArrayList<>();
+        orderFactory = new OrderFactory();
         served = new ArrayList<>();
+        this.observers = new ArrayList<>();
 
     }
 
@@ -44,6 +40,20 @@ public class Store implements StoreInterface{
             default -> grid.getTile(x, y + 1);
         };
         this.player = new Player(pos, facing, facingtile);
+    }
+
+    public void newOrder(){
+        ordered.add(orderFactory.createOrder());
+    }
+
+    public int serveOrder(List<String> items){
+        int score = 100;
+        List<String> order = ordered.get(0).items;
+        if(order.equals(items)){
+            return score;
+        }
+        return 100;//TODO: Scoring system
+
     }
 
     public void registerObserver(Observer o){

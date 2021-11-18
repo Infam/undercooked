@@ -5,8 +5,10 @@ public class Grid{
 	private Player player;
 	private int width;
 	private int height;
+	private Store store;
 
-	public Grid(){
+	public Grid(Store store){
+		this.store = store;
 		worldgrid = new int[][]
 			{{1, 1, 1, 1, 1, 2, 2, 0},
 			 {0, 0, 0, 0, 0, 0, 0, 0},
@@ -21,6 +23,9 @@ public class Grid{
 			for(int j = 0; j < worldtiles[0].length; j++){
 				if(worldgrid[i][j] == 1){
 					worldtiles[i][j] = new Tile(worldgrid[i][j], i, j, "lettuce");
+				}
+				else if(worldgrid[i][j] == 5){
+					worldtiles[i][j] = new Tile(worldgrid[i][j], i, j, this.store);
 				}
 				else
 					worldtiles[i][j] = new Tile(worldgrid[i][j], i, j);
