@@ -55,7 +55,7 @@ class CuttingBoard implements Strategy {
 class Grill implements Strategy {
     public void action(Tile t){ //Dispense item
         if(t.getItem() != null){
-            Item i = t.getItem();
+            Item i = t.getItem();//TODO: Timer for grill
             i.cook();
         }
     }
@@ -66,6 +66,9 @@ class GarbageDisposal implements Strategy {
         if(t.getItem() != null){
             t.setItem(null);
         }
+    }
+    public void place (Tile t, Player p){
+        p.setItem(null);
     }
 
     public void swap(Tile t, Player p){}
