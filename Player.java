@@ -18,30 +18,34 @@ public class Player {
 
     public void moveLeft(){
         facingdir = 2;
-        updateFacingTile();
-        if(tileCheck())
+        if(tileCheck()) {
             pos[1]--;
+        updateFacingTile();
+        }
     }
 
     public void moveRight(){
         facingdir = 3;
-        updateFacingTile();
-        if(tileCheck())
+        if(tileCheck()) {
             pos[1]++;
+        updateFacingTile();
+        }
     }
 
     public void moveUp(){
         facingdir = 0;
-        updateFacingTile();
-        if(tileCheck())
+        if(tileCheck()) {
             pos[0]--;
+        updateFacingTile();
+        }
     }
 
     public void moveDown(){
         facingdir = 1;
-        updateFacingTile();
-        if(tileCheck())
+        if(tileCheck()) {
             pos[0]++;
+        updateFacingTile();
+        }
     }
 
     public void updateFacingTile(){
@@ -59,6 +63,7 @@ public class Player {
     }
 
     public boolean tileCheck(){ //Make sure grid has nonfloor tiles on perimeter
+        updateFacingTile();
         return facingtile.getType() == 0;
     }
 
