@@ -3,10 +3,10 @@ import java.util.List;
 public class Tile{
 	private int[] position;
 	private int type;
+	private int standable;
 	private String dispenserDesc; //If dispenser, item's description.
 	private List<String> items;
 	private Item item;
-
 	private Strategy strategy;
 
 	public Tile(int type, int x, int y){
@@ -21,6 +21,8 @@ public class Tile{
 			strategy = new GarbageDisposal();
 		if (type == 5)
 			strategy = new Assembler();
+		if (type == 6)
+			strategy = new Counter();
 		position = new int[2];
 		position[0] = x;
 		position[1] = y;
@@ -36,6 +38,21 @@ public class Tile{
 
 	public void action(){
 		strategy.action(this);
+	}
+
+	public void holdingPlace(Player player) {
+		if(item != null){
+			strategy.swap(this, player);
+		}
+		else{
+			strategy.place(this, player);
+		}
+	}
+
+	public void emptyPlace(Player player){
+		if(item != null){
+			strategy.pickup(this, player);
+		}
 	}
 
 	//-----------------------------------
@@ -57,7 +74,7 @@ public class Tile{
 		position[1] = y;
 	}
 
-	public void addItem(Item item){
+	public void assembleItem(Item item){
 		items.add(item.getName()+","+item.getCut()+","+item.getCook());
 	}
 	
@@ -74,4 +91,6 @@ public class Tile{
 	public String getDispDesc(){
 		return dispenserDesc;
 	}
-} 
+
+
+}

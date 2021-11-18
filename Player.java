@@ -6,13 +6,44 @@ public class Player {
     private int[] pos;
     private Tile facingtile;
     private int facingdir;
-    private Item food;
+    private Item item;
 
     public Player(int[] startingPos, int facingdir, Tile facing){
         this.pos = startingPos;
         this.facingtile = facing;
         this.facingdir = facingdir;
     }
+
+    public void moveLeft(){
+        pos[0]--;
+    }
+
+    public void moveRight(){
+        pos[0]++;
+    }
+
+    public void moveUp(){
+        pos[1]--;
+    }
+
+    public void moveDown(){
+        pos[1]++;
+    }
+
+    public void interact(){
+        facingtile.action();
+    }
+
+    public void place(){
+        if(item != null){
+            facingtile.holdingPlace(this);
+        }
+        else {
+            facingtile.emptyPlace(this);
+        }
+
+    }
+
     
     public void movePos(KeyEvent e) {
         int c = e.getKeyCode();
@@ -32,11 +63,11 @@ public class Player {
 
     public void grabOrPlace(KeyEvent e){
         if(e.getKeyCode() == KeyEvent.VK_1){
-            if(food.getInHand() == true){
-                food.dropped();
+            if(item.getInHand() == true){
+                item.dropped();
             }
             else{
-                food.pickedUP();
+                item.pickedUP();
             }
         }
     }
@@ -46,14 +77,18 @@ public class Player {
             facingtile.action();
         }
     }
-
-    public void moveLeft(){
-
+    //Setters
+    public void setItem(Item item){
+        this.item = item;
     }
 
     //Getters
     public int[] getPlayerPos(){
         return pos;
+    }
+
+    public Item getItem(){
+        return item;
     }
 
     public int getDirectionFacing(){
