@@ -1,7 +1,10 @@
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.awt.*;
+import java.awt.event.*;
 
-public class Store implements Subject {
+public class Store extends JPanel implements ActionListener, KeyListener, Subject {
     private double register;
     private List<Order> ordered;
     private List<Order> served;
@@ -10,8 +13,16 @@ public class Store implements Subject {
     private OrderFactory orderFactory;
     private List<Observer> observers;
 
+    private final int DELAY = 50;
+    public static final int TILE_SIZE = 50;
+    private Timer timer;
+
     public Store(){
         initStore();
+        setPreferredSize(new Dimension(TILE_SIZE*grid.getHeight(), TILE_SIZE*grid.getWidth()));
+        setBackground(new Color(232, 232, 232));
+        timer = new Timer(DELAY, this);
+        timer.start();
     }
 
     public void initStore(){
@@ -22,7 +33,37 @@ public class Store implements Subject {
         orderFactory = new OrderFactory();
         served = new ArrayList<>();
         this.observers = new ArrayList<>();
+    }
 
+
+    @Override
+    public void actionPerformed(ActionEvent e){
+        repaint();
+    }
+
+    @Override
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+        populateGrid(g);
+        //drawScore(g); //TODO: add draw score
+        player.draw(g, this);
+        Toolkit.getDefaultToolkit().sync();
+    }
+
+
+    @Override
+    public void keyTyped(KeyEvent e){
+
+    }
+
+    public void keyPressed(KeyEvent e) {
+        // react to key down events
+        player.keyPressed(e);
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        // react to key up events
     }
 
     public static void main(String[] args){
@@ -114,6 +155,32 @@ public class Store implements Subject {
         return 100; //TODO: Scoring system
 
     }
+
+    private void populateGrid(Graphics g){
+        for (int row = 0; row<grid.getHeight(); row++){
+            for (int col = 0; col < grid.getWidth(); col++){
+                int type = grid.getTile(row, col).getType();
+                if (type == 0){
+                    if((row+col)%2==1){
+                        g.setColor(new Color(214, 214, 214));
+                    }
+                }
+                if (type == 1){
+                    g.setColor(new Color(0, 255, 0));
+                }
+                if (type == 2)
+                    g.setColor(new Color(255, 153, 51));
+                if (type == 3)
+                    g.setColor(new Color(255, 0, 0));
+                if (type == 4)
+                    g.setColor(new Color(102, 51, 0));
+                if (type == 6)
+                    g.setColor(new Color(128, 128, 128));
+                g.fillRect(col*TILE_SIZE, row*TILE_SIZE, TILE_SIZE, TILE_SIZE);
+            }
+        }
+    }
+
 
     public void registerObserver(Observer o){
         observers.add(o);

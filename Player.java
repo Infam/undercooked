@@ -1,5 +1,14 @@
 //import java.util.Scanner;
 import java.awt.event.KeyEvent;
+import java.awt.Graphics;
+import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
+import java.awt.Point;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+
 
 public class Player {
 
@@ -9,17 +18,51 @@ public class Player {
     private Item item;
     private Store store;
 
+    private BufferedImage image;
+    private Point point;
+
     public Player(Store store, int[] startingPos, int facingdir, Tile facing){
         this.pos = startingPos;
         this.facingtile = facing;
         this.facingdir = facingdir;
         this.store = store;
+        this.point = new Point(startingPos[1], startingPos[0]);
+        loadImage();
+    }
+
+    private void loadImage(){
+        try{
+            image = ImageIO.read(new File("resources/cheficonfront.png"));
+        } catch (IOException exc){
+            System.out.println("Error opening image file: " + exc.getMessage());
+        }
+    }
+
+    public void draw(Graphics g, ImageObserver observer){
+        g.drawImage(image, point.x * Store.TILE_SIZE, point.y*Store.TILE_SIZE, observer);
+    }
+
+    public void keyPressed(KeyEvent e) {
+        int key = e.getKeyCode();
+        if (key == KeyEvent.VK_LEFT){
+            moveLeft();
+        }
+        if (key == KeyEvent.VK_RIGHT){
+            moveRight();
+        }
+        if (key == KeyEvent.VK_UP){
+            moveUp();
+        }
+        if (key == KeyEvent.VK_DOWN){
+            moveDown();
+        }
     }
 
     public void moveLeft(){
         facingdir = 2;
         if(tileCheck()) {
             pos[1]--;
+            point.translate(-1, 0);
         updateFacingTile();
         }
     }
@@ -28,6 +71,7 @@ public class Player {
         facingdir = 3;
         if(tileCheck()) {
             pos[1]++;
+            point.translate(1, 0);
         updateFacingTile();
         }
     }
@@ -36,6 +80,7 @@ public class Player {
         facingdir = 0;
         if(tileCheck()) {
             pos[0]--;
+            point.translate(0, -1);
         updateFacingTile();
         }
     }
@@ -44,6 +89,7 @@ public class Player {
         facingdir = 1;
         if(tileCheck()) {
             pos[0]++;
+            point.translate(0, 1);
         updateFacingTile();
         }
     }
@@ -90,6 +136,10 @@ public class Player {
     //Getters
     public int[] getPos(){
         return pos;
+    }
+
+    public Point getPoint(){
+        return point;
     }
 
     public Item getItem(){
