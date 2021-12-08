@@ -88,7 +88,7 @@ public class Tile{
 	}
 
 	public void orderUp(){
-		store.serveOrder(items );
+		store.serveOrder(items);
 	}
 
 	private void loadImage(){

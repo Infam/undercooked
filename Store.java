@@ -72,6 +72,9 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
 
     @Override
     public void actionPerformed(ActionEvent e){
+        if(Utility.percentage(0.002)){
+            newOrder();
+        }
         repaint();
     }
 
@@ -185,7 +188,15 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
     }
 
     public void newOrder(){
-        ordered.add(orderFactory.createOrder());
+        if(ordered.size() < 5){
+            Order neworder = orderFactory.createOrder();
+            System.out.print("New Order: ");
+            for(int i = 0; i<neworder.items.size(); i++){
+                System.out.print(neworder.items.get(i) + " ");
+            }
+            System.out.println();
+            ordered.add(neworder);
+        }
     }
 
     public int serveOrder(List<String> items){
