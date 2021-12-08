@@ -31,14 +31,23 @@ public class Player {
     }
 
     private void loadImage(){
+        String face = "";
+        switch (facingdir) {
+            case (0) -> face = "up";
+            case (1) -> face = "down";
+            case (2) -> face = "left";
+            case (3) -> face = "right";
+            default -> face = "down";
+        }
         try{
-            image = ImageIO.read(new File("resources/cheficonfront.png"));
+            image = ImageIO.read(new File("resources/cheficon" + face + ".png"));
         } catch (IOException exc){
             System.out.println("Error opening image file: " + exc.getMessage());
         }
     }
 
     public void draw(Graphics g, ImageObserver observer){
+        loadImage();
         g.drawImage(image, point.x * Store.TILE_SIZE, point.y*Store.TILE_SIZE, observer);
     }
 

@@ -157,12 +157,17 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
     }
 
     private void populateGrid(Graphics g){
+        int type = 0;
         for (int row = 0; row<grid.getHeight(); row++){
             for (int col = 0; col < grid.getWidth(); col++){
-                int type = grid.getTile(row, col).getType();
+                type = grid.getTile(row, col).getType();
+                System.out.println(row + " " + col + " " + type);
                 if (type == 0){
                     if((row+col)%2==1){
                         g.setColor(new Color(214, 214, 214));
+                    }
+                    else{
+                        g.setColor(new Color(232, 232, 232));
                     }
                 }
                 if (type == 1){
@@ -176,7 +181,7 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
                     g.setColor(new Color(102, 51, 0));
                 if (type == 6)
                     g.setColor(new Color(128, 128, 128));
-                g.fillRect(col*TILE_SIZE, row*TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                g.fillRect(row*TILE_SIZE, col*TILE_SIZE, TILE_SIZE, TILE_SIZE);
             }
         }
     }
