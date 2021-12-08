@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.HashSet;
 
 public class Store extends JPanel implements ActionListener, KeyListener, Subject {
     private double register;
@@ -77,17 +78,9 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        //populateGrid(g);
+        populateGrid(g);
         //drawScore(g); //TODO: add draw score
-
-        for (int row = 0; row<grid.getHeight(); row++) {
-            for (int col = 0; col < grid.getWidth(); col++) {
-                grid.getTile(row, col).draw(g, this);
-            }
-        }
-
         player.draw(g, this);
-
         Toolkit.getDefaultToolkit().sync();
     }
 
@@ -188,21 +181,54 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
     }
 
     public int serveOrder(List<String> items){
-        int score = 100;
         List<String> order = ordered.get(0).items;
-        if(order.equals(items)){
+        int score = 100;
+        int incorrect = 0;
+        if(order.size() != items.size()){
+            return score = 0;
+        }
+        
+        else if(order.equals(items)){
             return score;
         }
-        return 100; //TODO: Scoring system
 
+        else{
+            HashSet<String> orderSet = new HashSet<String>(order);
+            HashSet<String> itemsSet = new HashSet<String>(items);
+            
+            for(String ingredient : orderSet)
+            {
+                int correctNumIng = 0;
+                int itemNumIng = 0;
+                for(int index = 0; index < order.size(); index++){
+                    if(ingredient.equals(order.get(index)))
+                    {
+                        correctNumIng += 1;
+                    }
+                    if(ingredient.equals(items.get(index)))
+                    {
+                        itemNumIng += 1;
+                    }
+                }
+                incorrect += Math.abs(correctNumIng - itemNumIng);
+            }
+            
+            for(int index = 0; index < order.size(); index++){
+                if(order.get(index) != items.get(index)){
+                    incorrect += 1;
+                }
+            }
+            
+            return score * ((order.size()-incorrect)/order.size()) ;
+        }
     }
 
     private void populateGrid(Graphics g){
-        int type;
+        int type = 0;
         for (int row = 0; row<grid.getHeight(); row++){
             for (int col = 0; col < grid.getWidth(); col++){
                 type = grid.getTile(row, col).getType();
-                //System.out.println(row + " " + col + " " + type);
+                System.out.println(row + " " + col + " " + type);
                 if (type == 0){
                     if((row+col)%2==1){
                         g.setColor(new Color(214, 214, 214));
@@ -220,8 +246,6 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
                     g.setColor(new Color(255, 0, 0));
                 if (type == 4)
                     g.setColor(new Color(102, 51, 0));
-                if (type == 5)
-                    g.setColor(new Color(255, 255, 100));
                 if (type == 6)
                     g.setColor(new Color(128, 128, 128));
                 g.fillRect(row*TILE_SIZE, col*TILE_SIZE, TILE_SIZE, TILE_SIZE);
