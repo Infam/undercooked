@@ -10,6 +10,12 @@ public class Item{
 		name = n;
 	}
 
+	public Item(Item i){
+		cut = i.getCut();
+		cooklvl = i.getCook();
+		name = new String(i.getName());
+	}
+
 	public void cut(){
 		if(cut == 0)
 			cut += 1;

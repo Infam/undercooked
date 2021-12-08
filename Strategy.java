@@ -11,13 +11,13 @@ public interface Strategy {
         p.setItem(null);
     }
     default void pickup(Tile t, Player p){
-        Item item = t.getItem();
+        Item item = new Item(t.getItem());
         p.setItem(item);
         t.setItem(null);
     }
     default void swap(Tile t, Player p){
-        Item pitem = p.getItem();
-        Item titem = t.getItem();
+        Item pitem = new Item(p.getItem());
+        Item titem = new Item(t.getItem());
         p.setItem(titem);
         t.setItem(pitem);
     }
@@ -44,7 +44,7 @@ class Dispenser implements Strategy {
     public void swap(Tile t, Player p){}
 
     public void pickup(Tile t, Player p){
-        Item item = t.getItem();
+        Item item = new Item(t.getItem());
         p.setItem(item);
     }
 }

@@ -69,7 +69,7 @@ public class Player {
 			    itemimage = ImageIO.read(new File("resources/" + itemName + ".png"));
 		    }
 	    } catch (IOException exc){
-		    System.out.println("Error opening image file: " + exc.getMessage());
+		System.out.println("Error opening image file for " + itemName + exc.getMessage());
 	    }
 
     }
