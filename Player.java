@@ -97,6 +97,9 @@ public class Player {
         if (key == KeyEvent.VK_C){
             place();
         }
+        if (key == KeyEvent.VK_P){
+            store.printOrders();
+        }
     }
 
     public void moveLeft(){

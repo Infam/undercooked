@@ -325,6 +325,16 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
         }
     }
 
+    public void printOrders(){
+        for(int j = 0; j<ordered.size(); j++){
+            System.out.print("Order " + j + ": ");
+            for(int i = 0; i<ordered.get(j).items.size(); i++){
+                System.out.print(ordered.get(j).items.get(i) + " ");
+            }
+            System.out.println();
+        }
+    }
+
     /*
         private double register;
     private List<Order> ordered;
