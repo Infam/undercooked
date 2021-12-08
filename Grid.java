@@ -1,6 +1,10 @@
+import java.util.List;
+import java.util.ArrayList;
+
 public class Grid{
 	private int[][] worldgrid;
 	private Tile[][] worldtiles;
+	private List<String> holding = new ArrayList<String>();
 	//private int[] playerpos;
 	private Player player;
 	private int width;
@@ -35,7 +39,7 @@ public class Grid{
 					worldtiles[i][j] = new Tile(worldgrid[i][j], i, j, desc);
 				}
 				else if(worldgrid[i][j] == 5){
-					worldtiles[i][j] = new Tile(worldgrid[i][j], i, j, this.store);
+					worldtiles[i][j] = new Tile(worldgrid[i][j], i, j, this.store, holding);
 				}
 				else
 					worldtiles[i][j] = new Tile(worldgrid[i][j], i, j);

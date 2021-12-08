@@ -52,7 +52,8 @@ public class Tile{
 		loadImage();
 	}
 
-	public Tile(int type, int x, int y, Store store){
+	public Tile(int type, int x, int y, Store store, List<String> holding){
+		this.items = holding;
 		this.type = type;
 		this.store = store;
 		strategy = new Assembler();
@@ -174,5 +175,7 @@ public class Tile{
 	public String getDispDesc(){
 		return dispenserDesc;
 	}
-
+	public List<String> getItems(){
+		return items;
+	}
 }
