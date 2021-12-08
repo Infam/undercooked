@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.HashSet;
 
 public class Store extends JPanel implements ActionListener, KeyListener, Subject {
     private double register;
@@ -26,23 +25,23 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
         setPreferredSize(new Dimension(TILE_SIZE*grid.getHeight(), TILE_SIZE*grid.getWidth()));
         setBackground(new Color(232, 232, 232));
 
-	//https://www.baeldung.com/java-timer-and-timertask
-	//TimerTask task = new TimerTask() {
+        //https://www.baeldung.com/java-timer-and-timertask
+        //TimerTask task = new TimerTask() {
         //	public void run() {
         //	    System.out.println("HELLO!");
         //	}
-    	//};
+        //};
 
-	//item update action
-	ActionListener taskPerformer = new ActionListener() {
-		public void actionPerformed(ActionEvent evt) {
-			updateGrid();
-          //...Perform a task...
-      		}
-  	};
+        //item update action
+        ActionListener taskPerformer = new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                updateGrid();
+                //...Perform a task...
+            }
+        };
 
         Timer clock = new Timer(5000, taskPerformer);
-	clock.start();
+        clock.start();
 
         timer = new Timer(DELAY, this);
         timer.start();
@@ -65,9 +64,9 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
                 int type = grid.getTile(row, col).getType();
                 if (type == 3 || type == 4)
                     grid.getTile(row, col).update();
-	    }
-	}
-	System.out.println("Grid Updated!");
+            }
+        }
+        System.out.println("Grid Updated!");
     }
 
     @Override
@@ -78,9 +77,17 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        populateGrid(g);
+        //populateGrid(g);
         //drawScore(g); //TODO: add draw score
+
+        for (int row = 0; row<grid.getHeight(); row++) {
+            for (int col = 0; col < grid.getWidth(); col++) {
+                grid.getTile(row, col).draw(g, this);
+            }
+        }
+
         player.draw(g, this);
+
         Toolkit.getDefaultToolkit().sync();
     }
 
@@ -101,60 +108,60 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
     }
 
     public static void main(String[] args){
-	    Store s = new Store();
-	    s.newOrder();
-	    Player p = s.getPlayer();
-	    s.printGrid();
-	    System.out.println("Moving Up:");
-	    p.moveUp();
-	    s.printGrid();
-	    System.out.println("Moving Down:");
-	    p.moveDown();
-	    s.printGrid();
-	    System.out.println("Moving Left:");
-	    p.moveLeft();
-	    s.printGrid();
-	    System.out.println("Moving Right:");
-	    p.moveRight();
-	    s.printGrid();
-	    System.out.println("Getting Lettuce from dispenser:");
-	    p.moveUp();
-	    p.interact();
-	    p.place();
-	    System.out.println("Player is holding: " + p.getItem().getName());
-	    s.printGrid();
+        Store s = new Store();
+        s.newOrder();
+        Player p = s.getPlayer();
+        s.printGrid();
+        System.out.println("Moving Up:");
+        p.moveUp();
+        s.printGrid();
+        System.out.println("Moving Down:");
+        p.moveDown();
+        s.printGrid();
+        System.out.println("Moving Left:");
+        p.moveLeft();
+        s.printGrid();
+        System.out.println("Moving Right:");
+        p.moveRight();
+        s.printGrid();
+        System.out.println("Getting Lettuce from dispenser:");
+        p.moveUp();
+        p.interact();
+        p.place();
+        System.out.println("Player is holding: " + p.getItem().getName());
+        s.printGrid();
 
-	    System.out.println("Cutting lettuce at cutting board:");
-	    p.moveDown();
-	    p.moveRight();
-	    p.moveUp();
-	    s.printGrid();
-	    p.place();
-	    p.interact();
-	    p.place();
-	    System.out.println("Player is holding: " + p.getItem().getName());
-	    System.out.println("Item cut level: " + p.getItem().getCut());
+        System.out.println("Cutting lettuce at cutting board:");
+        p.moveDown();
+        p.moveRight();
+        p.moveUp();
+        s.printGrid();
+        p.place();
+        p.interact();
+        p.place();
+        System.out.println("Player is holding: " + p.getItem().getName());
+        System.out.println("Item cut level: " + p.getItem().getCut());
 
-	    System.out.println("Grilling lettuce at grill:");
-	    p.moveDown();
-	    p.moveDown();
-	    p.moveDown();
-	    s.printGrid();
-	    p.place();
-	    p.interact();
-	    p.place();
-	    System.out.println("Player is holding: " + p.getItem().getName());
-	    System.out.println("Item grill level: " + p.getItem().getCook());
+        System.out.println("Grilling lettuce at grill:");
+        p.moveDown();
+        p.moveDown();
+        p.moveDown();
+        s.printGrid();
+        p.place();
+        p.interact();
+        p.place();
+        System.out.println("Player is holding: " + p.getItem().getName());
+        System.out.println("Item grill level: " + p.getItem().getCook());
 
-	    System.out.println("Throwing lettuce away:");
-	    p.moveUp();
-	    p.moveRight();
-	    p.moveDown();
-	    s.printGrid();
-	    p.place();
-	    p.interact();
-	    p.place();
-	    System.out.println("Player is holding: " + p.getItem());
+        System.out.println("Throwing lettuce away:");
+        p.moveUp();
+        p.moveRight();
+        p.moveDown();
+        s.printGrid();
+        p.place();
+        p.interact();
+        p.place();
+        System.out.println("Player is holding: " + p.getItem());
 
     }
 
@@ -181,54 +188,21 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
     }
 
     public int serveOrder(List<String> items){
-        List<String> order = ordered.get(0).items;
         int score = 100;
-        int incorrect = 0;
-        if(order.size() != items.size()){
-            return score = 0;
-        }
-        
-        else if(order.equals(items)){
+        List<String> order = ordered.get(0).items;
+        if(order.equals(items)){
             return score;
         }
+        return 100; //TODO: Scoring system
 
-        else{
-            HashSet<String> orderSet = new HashSet<String>(order);
-            HashSet<String> itemsSet = new HashSet<String>(items);
-            
-            for(String ingredient : orderSet)
-            {
-                int correctNumIng = 0;
-                int itemNumIng = 0;
-                for(int index = 0; index < order.size(); index++){
-                    if(ingredient.equals(order.get(index)))
-                    {
-                        correctNumIng += 1;
-                    }
-                    if(ingredient.equals(items.get(index)))
-                    {
-                        itemNumIng += 1;
-                    }
-                }
-                incorrect += Math.abs(correctNumIng - itemNumIng);
-            }
-            
-            for(int index = 0; index < order.size(); index++){
-                if(order.get(index) != items.get(index)){
-                    incorrect += 1;
-                }
-            }
-            
-            return score * ((order.size()-incorrect)/order.size()) ;
-        }
     }
 
     private void populateGrid(Graphics g){
-        int type = 0;
+        int type;
         for (int row = 0; row<grid.getHeight(); row++){
             for (int col = 0; col < grid.getWidth(); col++){
                 type = grid.getTile(row, col).getType();
-                System.out.println(row + " " + col + " " + type);
+                //System.out.println(row + " " + col + " " + type);
                 if (type == 0){
                     if((row+col)%2==1){
                         g.setColor(new Color(214, 214, 214));
@@ -246,6 +220,8 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
                     g.setColor(new Color(255, 0, 0));
                 if (type == 4)
                     g.setColor(new Color(102, 51, 0));
+                if (type == 5)
+                    g.setColor(new Color(255, 255, 100));
                 if (type == 6)
                     g.setColor(new Color(128, 128, 128));
                 g.fillRect(row*TILE_SIZE, col*TILE_SIZE, TILE_SIZE, TILE_SIZE);
@@ -295,10 +271,10 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
 
         for(int i = 0; i<grid.getWidth(); i++){
             for(int j = 0; j<grid.getHeight(); j++){
-		    if ((i == ppos[0]) && (j == ppos[1]))
-                	System.out.print("X\t");
-		    else
-                	System.out.print(grid2d[i][j]+"\t");
+                if ((i == ppos[0]) && (j == ppos[1]))
+                    System.out.print("X\t");
+                else
+                    System.out.print(grid2d[i][j]+"\t");
             }
             System.out.println();
         }
