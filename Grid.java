@@ -10,7 +10,7 @@ public class Grid{
 	public Grid(Store store){
 		this.store = store;
 		worldgrid = new int[][]
-			{{1, 1, 1, 1, 1, 2, 2, 6},
+			{{10, 11, 12, 13, 14, 2, 2, 6},
 			 {6, 0, 0, 0, 0, 0, 0, 6},
 			 {6, 0, 0, 0, 0, 0, 0, 5},
 			 {6, 0, 0, 0, 0, 0, 0, 6},
@@ -21,8 +21,18 @@ public class Grid{
 		worldtiles = new Tile[worldgrid.length][worldgrid[0].length];
 		for(int i = 0; i < worldtiles.length; i++){
 			for(int j = 0; j < worldtiles[0].length; j++){
-				if(worldgrid[i][j] == 1){
-					worldtiles[i][j] = new Tile(worldgrid[i][j], i, j, "lettuce");
+				if(worldgrid[i][j] >= 10){
+					int disp = worldgrid[i][j] - 10;
+					String desc;
+					switch (disp) {
+						case (0) -> desc = "Lettuce";
+						case (1) -> desc = "Tomato";
+						case (2) -> desc = "Bun";
+						case (3) -> desc = "Patty";
+						case (4) -> desc = "Cheese";
+						default -> desc = "Patty";
+					}
+					worldtiles[i][j] = new Tile(worldgrid[i][j], i, j, desc);
 				}
 				else if(worldgrid[i][j] == 5){
 					worldtiles[i][j] = new Tile(worldgrid[i][j], i, j, this.store);

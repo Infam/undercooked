@@ -45,6 +45,7 @@ public class Tile{
 	public Tile(int type, int x, int y,String desc){ //dispenser will by type 1
 		this.type = type;
 		this.dispenserDesc = desc;
+		this.item = new Item(desc);
 		strategy = new Dispenser();
 		point = new Point(y, x);
 		loadImage();
@@ -130,6 +131,10 @@ public class Tile{
 	public int[] getPosition(){
 		return position;
 	}
+	public Point getPoint(){
+		return point;
+	}
+
 	public int getType(){
 		return type;
 	}

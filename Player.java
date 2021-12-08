@@ -19,6 +19,7 @@ public class Player {
     private Store store;
 
     private BufferedImage image;
+    private BufferedImage itemimage;
     private Point point;
 
     public Player(Store store, int[] startingPos, int facingdir, Tile facing){
@@ -46,9 +47,23 @@ public class Player {
         }
     }
 
+    private void loadItemImage(){
+        String itemName = item.getName();
+        try{
+            image = ImageIO.read(new File("resources/" + itemName + ".png"));
+        } catch (IOException exc){
+            System.out.println("Error opening image file: " + exc.getMessage());
+        }
+
+    }
+
     public void draw(Graphics g, ImageObserver observer){
         loadImage();
         g.drawImage(image, point.x * Store.TILE_SIZE, point.y*Store.TILE_SIZE, observer);
+        if (item != null){
+            loadItemImage();
+            g.drawImage(itemimage, facingtile.getPoint().x * Store.TILE_SIZE, facingtile.getPoint().y*Store.TILE_SIZE, observer);
+        }
     }
 
     public void keyPressed(KeyEvent e) {
@@ -64,6 +79,12 @@ public class Player {
         }
         if (key == KeyEvent.VK_DOWN){
             moveDown();
+        }
+        if (key == KeyEvent.VK_X){
+            interact();
+        }
+        if (key == KeyEvent.VK_C){
+            place();
         }
     }
 
