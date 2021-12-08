@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.util.ArrayList;
+//import java.util.TimerTask;
 import java.util.List;
 import java.awt.*;
 import java.awt.event.*;
@@ -12,17 +13,39 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
     private Player player;
     private OrderFactory orderFactory;
     private List<Observer> observers;
+    private int time;
 
     private final int DELAY = 50;
     public static final int TILE_SIZE = 50;
     private Timer timer;
 
+
     public Store(){
         initStore();
         setPreferredSize(new Dimension(TILE_SIZE*grid.getHeight(), TILE_SIZE*grid.getWidth()));
         setBackground(new Color(232, 232, 232));
+
+	//https://www.baeldung.com/java-timer-and-timertask
+	//TimerTask task = new TimerTask() {
+        //	public void run() {
+        //	    System.out.println("HELLO!");
+        //	}
+    	//};
+
+	//item update action
+	ActionListener taskPerformer = new ActionListener() {
+		public void actionPerformed(ActionEvent evt) {
+			updateGrid();
+          //...Perform a task...
+      		}
+  	};
+
+        Timer clock = new Timer(5000, taskPerformer);
+	clock.start();
+
         timer = new Timer(DELAY, this);
         timer.start();
+
     }
 
     public void initStore(){
@@ -35,6 +58,16 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
         this.observers = new ArrayList<>();
     }
 
+    public void updateGrid(){
+        for (int row = 0; row< grid.getHeight(); row++){
+            for (int col = 0; col < grid.getWidth(); col++){
+                int type = grid.getTile(row, col).getType();
+                if (type == 3 || type == 4)
+                    grid.getTile(row, col).update();
+	    }
+	}
+	System.out.println("Grid Updated!");
+    }
 
     @Override
     public void actionPerformed(ActionEvent e){
@@ -211,6 +244,10 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
 
     public Player getPlayer(){
         return player;
+    }
+
+    public int getTime(){
+        return time;
     }
 
     public Grid getGrid(){

@@ -17,6 +17,7 @@ public interface Strategy {
         p.setItem(titem);
         t.setItem(pitem);
     }
+    default void update(Tile t){}
 }
 
 class Dispenser implements Strategy {
@@ -53,7 +54,11 @@ class CuttingBoard implements Strategy {
 }
 
 class Grill implements Strategy {
-    public void action(Tile t){ //Dispense item
+    public void action(Tile t){
+    }
+
+    public void update(Tile t){
+	    System.out.println("Updating Grill!");
         if(t.getItem() != null){
             Item i = t.getItem();//TODO: Timer for grill
             i.cook();
@@ -62,7 +67,10 @@ class Grill implements Strategy {
 }
 
 class GarbageDisposal implements Strategy {
-    public void action(Tile t){ //Dispense item
+    public void action(Tile t){}
+
+    public void update(Tile t){ //Dispense item
+	    System.out.println("Updating Garbage!");
         if(t.getItem() != null){
             t.setItem(null);
         }

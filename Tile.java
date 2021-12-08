@@ -45,6 +45,10 @@ public class Tile{
 		strategy.action(this);
 	}
 
+	public void update(){
+		strategy.update(this);
+	}
+
 	public void holdingPlace(Player player) {
 		if(item != null){
 			strategy.swap(this, player);
@@ -100,6 +104,5 @@ public class Tile{
 	public String getDispDesc(){
 		return dispenserDesc;
 	}
-
 
 }
