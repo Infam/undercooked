@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.HashSet;
 
 public class Store extends JPanel implements ActionListener, KeyListener, Subject {
     private double register;
@@ -188,13 +189,46 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
     }
 
     public int serveOrder(List<String> items){
-        int score = 100;
         List<String> order = ordered.get(0).items;
-        if(order.equals(items)){
+        int score = 100;
+        int incorrect = 0;
+        if(order.size() != items.size()){
+            return score = 0;
+        }
+        
+        else if(order.equals(items)){
             return score;
         }
-        return 100; //TODO: Scoring system
 
+        else{
+            HashSet<String> orderSet = new HashSet<String>(order);
+            HashSet<String> itemsSet = new HashSet<String>(items);
+            
+            for(String ingredient : orderSet)
+            {
+                int correctNumIng = 0;
+                int itemNumIng = 0;
+                for(int index = 0; index < order.size(); index++){
+                    if(ingredient.equals(order.get(index)))
+                    {
+                        correctNumIng += 1;
+                    }
+                    if(ingredient.equals(items.get(index)))
+                    {
+                        itemNumIng += 1;
+                    }
+                }
+                incorrect += Math.abs(correctNumIng - itemNumIng);
+            }
+            
+            for(int index = 0; index < order.size(); index++){
+                if(order.get(index) != items.get(index)){
+                    incorrect += 1;
+                }
+            }
+            
+            return score * ((order.size()-incorrect)/order.size()) ;
+        }
     }
 
     private void populateGrid(Graphics g){
