@@ -128,27 +128,18 @@ public class Tile{
 		int cooklvl = item.getCook();
 		int cutlvl  = item.getCut();
 
-		try{
-			if(itemName.equals("Patty")){
-				//System.out.println("Patty");
-				//System.out.println("cooklvl: " + cooklvl);
-				//System.out.println("cutlvl: " + cutlvl);
-				if(cutlvl == 1 && cooklvl == 0)
-					itemimage = ImageIO.read(new File("resources/" + itemName + "_cut_raw.png"));
-				else if(cutlvl == 1 && cooklvl == 1)
-					itemimage = ImageIO.read(new File("resources/" + itemName + "_cut_cooked.png"));
-				else if(cutlvl == 1 && cooklvl == 2)
-					itemimage = ImageIO.read(new File("resources/" + itemName + "_cut_burnt.png"));
-				else{
-					itemimage = ImageIO.read(new File("resources/" + itemName + ".png"));
-				}
-			}
-			else if(cutlvl > 0){
-				itemimage = ImageIO.read(new File("resources/" + itemName + "_cut.png"));
-			}
-			else{
-				itemimage = ImageIO.read(new File("resources/" + itemName + ".png"));
-			}
+	    String cut = "";
+	    String cook= "";
+	    if(cutlvl > 0)
+		    cut = "_cut";
+	    if(cooklvl == 0)
+		    cook = "_raw";
+	    else if(cooklvl == 1)
+		    cook = "_cooked";
+	    else if(cooklvl == 2)
+		    cook = "_burnt";
+	    try{
+		itemimage = ImageIO.read(new File("resources/" + itemName + cut + cook +".png"));
 		} catch (IOException exc){
 			System.out.println("Error opening image file for " + itemName + exc.getMessage());
 		}
