@@ -31,7 +31,7 @@ public class Player {
     }
 
     private void loadImage(){
-        String face = "";
+        String face;
         switch (facingdir) {
             case (0) -> face = "up";
             case (1) -> face = "down";

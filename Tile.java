@@ -1,3 +1,13 @@
+//import java.util.Scanner;
+import java.awt.event.KeyEvent;
+import java.awt.Graphics;
+import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
+import java.awt.Point;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import java.util.List;
 
 public class Tile{
@@ -9,6 +19,8 @@ public class Tile{
 	private Item item;
 	private Strategy strategy;
 	private Store store;
+	private BufferedImage image;
+	private Point point;
 
 	public Tile(int type, int x, int y){
 		this.type = type;
@@ -25,6 +37,8 @@ public class Tile{
 		position = new int[2];
 		position[0] = x;
 		position[1] = y;
+		point = new Point(y,x);
+		loadImage();
 
 	}
 
@@ -32,12 +46,16 @@ public class Tile{
 		this.type = type;
 		this.dispenserDesc = desc;
 		strategy = new Dispenser();
+		point = new Point(y, x);
+		loadImage();
 	}
 
 	public Tile(int type, int x, int y, Store store){
 		this.type = type;
 		this.store = store;
 		strategy = new Assembler();
+		point = new Point(y,x);
+		loadImage();
 	}
 
 
@@ -68,6 +86,11 @@ public class Tile{
 		store.serveOrder(items );
 	}
 
+	private void loadImage(){
+		strategy.loadImage(this);
+	}
+
+
 	//-----------------------------------
 	//Setters
 	public int setItem(Item i){ //1 on success, 0 on failure
@@ -80,6 +103,15 @@ public class Tile{
 			return 1;
 		}
 		return 0;
+	}
+
+	public void setImage(BufferedImage image){
+		this.image = image;
+	}
+
+	public void draw(Graphics g, ImageObserver observer){
+		loadImage();
+		g.drawImage(image, point.x * Store.TILE_SIZE, point.y*Store.TILE_SIZE, observer);
 	}
 
 	public void setPosition(int x,int y){

@@ -77,9 +77,17 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        populateGrid(g);
+        //populateGrid(g);
         //drawScore(g); //TODO: add draw score
+
+        for (int row = 0; row<grid.getHeight(); row++) {
+            for (int col = 0; col < grid.getWidth(); col++) {
+                grid.getTile(row, col).draw(g, this);
+            }
+        }
+
         player.draw(g, this);
+
         Toolkit.getDefaultToolkit().sync();
     }
 
@@ -190,11 +198,11 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
     }
 
     private void populateGrid(Graphics g){
-        int type = 0;
+        int type;
         for (int row = 0; row<grid.getHeight(); row++){
             for (int col = 0; col < grid.getWidth(); col++){
                 type = grid.getTile(row, col).getType();
-                System.out.println(row + " " + col + " " + type);
+                //System.out.println(row + " " + col + " " + type);
                 if (type == 0){
                     if((row+col)%2==1){
                         g.setColor(new Color(214, 214, 214));
@@ -212,6 +220,8 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
                     g.setColor(new Color(255, 0, 0));
                 if (type == 4)
                     g.setColor(new Color(102, 51, 0));
+                if (type == 5)
+                    g.setColor(new Color(255, 255, 100));
                 if (type == 6)
                     g.setColor(new Color(128, 128, 128));
                 g.fillRect(row*TILE_SIZE, col*TILE_SIZE, TILE_SIZE, TILE_SIZE);
