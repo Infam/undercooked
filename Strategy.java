@@ -109,6 +109,10 @@ class Assembler implements Strategy {
         p.setItem(null);
     }
 
+    public void update(Tile t){
+	    System.out.println(t.getItems() + "Updating Assembler");
+    }
+
     public void swap(Tile t, Player p){}
 
     public void pickup(Tile t, Player p){}

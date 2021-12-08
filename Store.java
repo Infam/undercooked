@@ -63,7 +63,7 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
         for (int row = 0; row< grid.getHeight(); row++){
             for (int col = 0; col < grid.getWidth(); col++){
                 int type = grid.getTile(row, col).getType();
-                if (type == 3 || type == 4)
+                if (type == 3 || type == 4 || type == 5)
                     grid.getTile(row, col).update();
             }
         }
