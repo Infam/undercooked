@@ -89,6 +89,7 @@ public class Tile{
 
 	public void orderUp(){
 		store.serveOrder(items);
+		this.items.clear();
 	}
 
 	private void loadImage(){

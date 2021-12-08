@@ -68,6 +68,11 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
             }
         }
         System.out.println("Grid Updated!");
+        /*System.out.println(ordered);
+        for(int i = 0; i < ordered.size(); i++)
+        {
+            System.out.println(ordered.get(i).items);
+        }*/
     }
 
     @Override
@@ -201,35 +206,45 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
 
     public int serveOrder(List<String> items){
         List<String> order = ordered.get(0).items;
+        ordered.remove(ordered.get(0));
         int score = 100;
         int incorrect = 0;
         if(order.size() != items.size()){
+            System.out.println("0 points, at least get the number of ingredients right!");
             return score = 0;
         }
         
         else if(order.equals(items)){
+            System.out.println("100 points, great job!");
             return score;
         }
 
         else{
             HashSet<String> orderSet = new HashSet<String>(order);
-            HashSet<String> itemsSet = new HashSet<String>(items);
             
+            int totalCorrectIng = 0;
             for(String ingredient : orderSet)
             {
+                String[] Odetails = ingredient.split("\\,");
+                System.out.println(Odetails[0]);
                 int correctNumIng = 0;
                 int itemNumIng = 0;
                 for(int index = 0; index < order.size(); index++){
-                    if(ingredient.equals(order.get(index)))
+                    String[] Idetails = order.get(index).split("\\,");
+                    if(Odetails[0].equals(Idetails[0]))
                     {
                         correctNumIng += 1;
                     }
-                    if(ingredient.equals(items.get(index)))
+                    if(Odetails[0].equals(Idetails[0]))
                     {
                         itemNumIng += 1;
                     }
                 }
-                incorrect += Math.abs(correctNumIng - itemNumIng);
+                if(itemNumIng >= correctNumIng){
+                    totalCorrectIng = correctNumIng;
+                }
+                System.out.println(correctNumIng + "," + itemNumIng);
+                incorrect += order.size() - totalCorrectIng;
             }
             
             for(int index = 0; index < order.size(); index++){
@@ -237,8 +252,8 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
                     incorrect += 1;
                 }
             }
-            
-            return score * ((order.size()-incorrect)/order.size()) ;
+            System.out.println(incorrect + "," + score * ((order.size()*2-incorrect)/order.size()));
+            return score * ((order.size()*2-incorrect)/order.size());
         }
     }
 
