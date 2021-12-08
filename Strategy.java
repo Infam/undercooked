@@ -1,3 +1,7 @@
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
+
 //=====================Strategy Pattern=======================
 public interface Strategy {
     void action(Tile t);
@@ -18,6 +22,14 @@ public interface Strategy {
         t.setItem(pitem);
     }
     default void update(Tile t){}
+
+    default void loadImage(Tile t){
+        try{
+            t.setImage(ImageIO.read(new File("resources/" + this.getClass().getSimpleName() + ".png")));
+        } catch (IOException exc){
+            System.out.println("Error opening image file: " + exc.getMessage());
+        }
+    }
 }
 
 class Dispenser implements Strategy {
@@ -30,7 +42,6 @@ class Dispenser implements Strategy {
     public void place(Tile t, Player p){}
 
     public void swap(Tile t, Player p){}
-
 }
 
 class Floor implements Strategy {
