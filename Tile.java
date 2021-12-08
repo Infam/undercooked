@@ -122,8 +122,25 @@ public class Tile{
 
 	private void loadItemImage(){
 		String itemName = item.getName();
+		int cooklvl = item.getCook();
+		int cutlvl  = item.getCut();
+
+
 		try{
-			itemimage = ImageIO.read(new File("resources/" + itemName + ".png"));
+			if(itemName == "Patty"){
+				if(cutlvl > 0 && cooklvl == 0)
+					itemimage = ImageIO.read(new File("resources/" + itemName + "_cut_raw.png"));
+				if(cutlvl > 0 && cooklvl == 1)
+					itemimage = ImageIO.read(new File("resources/" + itemName + "_cut_cooked.png"));
+				if(cutlvl > 0 && cooklvl == 2)
+					itemimage = ImageIO.read(new File("resources/" + itemName + "_cut_burnt.png"));
+			}
+			else if(cutlvl > 0){
+				itemimage = ImageIO.read(new File("resources/" + itemName + "_cut.png"));
+			}
+			else{
+				itemimage = ImageIO.read(new File("resources/" + itemName + ".png"));
+			}
 		} catch (IOException exc){
 			System.out.println("Error opening image file: " + exc.getMessage());
 		}
