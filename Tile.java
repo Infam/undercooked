@@ -20,6 +20,7 @@ public class Tile{
 	private Strategy strategy;
 	private Store store;
 	private BufferedImage image;
+	private BufferedImage itemimage;
 	private Point point;
 
 	public Tile(int type, int x, int y){
@@ -113,7 +114,22 @@ public class Tile{
 	public void draw(Graphics g, ImageObserver observer){
 		loadImage();
 		g.drawImage(image, point.x * Store.TILE_SIZE, point.y*Store.TILE_SIZE, observer);
+		if (item != null){
+			loadItemImage();
+			g.drawImage(itemimage, point.x * Store.TILE_SIZE, point.y*Store.TILE_SIZE, observer);
+		}
 	}
+
+	private void loadItemImage(){
+		String itemName = item.getName();
+		try{
+			itemimage = ImageIO.read(new File("resources/" + itemName + ".png"));
+		} catch (IOException exc){
+			System.out.println("Error opening image file: " + exc.getMessage());
+		}
+
+	}
+
 
 	public void setPosition(int x,int y){
 		position[0] = x;

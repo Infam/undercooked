@@ -42,6 +42,11 @@ class Dispenser implements Strategy {
     public void place(Tile t, Player p){}
 
     public void swap(Tile t, Player p){}
+
+    public void pickup(Tile t, Player p){
+        Item item = t.getItem();
+        p.setItem(item);
+    }
 }
 
 class Floor implements Strategy {

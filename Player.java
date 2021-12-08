@@ -50,7 +50,7 @@ public class Player {
     private void loadItemImage(){
         String itemName = item.getName();
         try{
-            image = ImageIO.read(new File("resources/" + itemName + ".png"));
+            itemimage = ImageIO.read(new File("resources/" + itemName + ".png"));
         } catch (IOException exc){
             System.out.println("Error opening image file: " + exc.getMessage());
         }
