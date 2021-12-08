@@ -54,13 +54,16 @@ public class Player {
 
 
 	    try{
-		    if(itemName == "Patty"){
+		if(itemName.equals("Patty")){
 			    if(cutlvl > 0 && cooklvl == 0)
 				    itemimage = ImageIO.read(new File("resources/" + itemName + "_cut_raw.png"));
-			    if(cutlvl > 0 && cooklvl == 1)
+			    else if(cutlvl > 0 && cooklvl == 1)
 				    itemimage = ImageIO.read(new File("resources/" + itemName + "_cut_cooked.png"));
-			    if(cutlvl > 0 && cooklvl == 2)
+			    else if(cutlvl > 0 && cooklvl == 2)
 				    itemimage = ImageIO.read(new File("resources/" + itemName + "_cut_burnt.png"));
+				else{
+					itemimage = ImageIO.read(new File("resources/" + itemName + ".png"));
+				}
 		    }
 		    else if(cutlvl > 0){
 			    itemimage = ImageIO.read(new File("resources/" + itemName + "_cut.png"));
@@ -169,7 +172,7 @@ public class Player {
             facingtile.holdingPlace(this);
         }
         else {
-	    System.out.println("Player is not holding anything. Trying to pick something up...");
+	    System.out.println("Player is not holding anything. Placing Nothing Down...");
             facingtile.emptyPlace(this);
         }
 

@@ -11,7 +11,7 @@ public interface Strategy {
         p.setItem(null);
     }
     default void pickup(Tile t, Player p){
-        Item item = new Item(t.getItem());
+        Item item = t.getItem();
         p.setItem(item);
         t.setItem(null);
     }
@@ -62,6 +62,7 @@ class Floor implements Strategy {
 
 class CuttingBoard implements Strategy {
     public void action(Tile t){ //Dispense item
+	System.out.println("Cutting...");
         if(t.getItem() != null){
             Item i = t.getItem();
             i.cut();

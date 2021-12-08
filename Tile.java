@@ -80,6 +80,8 @@ public class Tile{
 
 	public void emptyPlace(Player player){
 		if(item != null){
+			System.out.println("Picking up a " + this.getItem().getName());
+			System.out.println("Cut lvl: " + this.getItem().getCut());
 			strategy.pickup(this, player);
 		}
 	}
@@ -125,15 +127,20 @@ public class Tile{
 		int cooklvl = item.getCook();
 		int cutlvl  = item.getCut();
 
-
 		try{
-			if(itemName == "Patty"){
-				if(cutlvl > 0 && cooklvl == 0)
+			if(itemName.equals("Patty")){
+				//System.out.println("Patty");
+				//System.out.println("cooklvl: " + cooklvl);
+				//System.out.println("cutlvl: " + cutlvl);
+				if(cutlvl == 1 && cooklvl == 0)
 					itemimage = ImageIO.read(new File("resources/" + itemName + "_cut_raw.png"));
-				if(cutlvl > 0 && cooklvl == 1)
+				else if(cutlvl == 1 && cooklvl == 1)
 					itemimage = ImageIO.read(new File("resources/" + itemName + "_cut_cooked.png"));
-				if(cutlvl > 0 && cooklvl == 2)
+				else if(cutlvl == 1 && cooklvl == 2)
 					itemimage = ImageIO.read(new File("resources/" + itemName + "_cut_burnt.png"));
+				else{
+					itemimage = ImageIO.read(new File("resources/" + itemName + ".png"));
+				}
 			}
 			else if(cutlvl > 0){
 				itemimage = ImageIO.read(new File("resources/" + itemName + "_cut.png"));
