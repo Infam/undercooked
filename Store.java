@@ -191,7 +191,7 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
             }
 
             HashSet<String> orderSet = new HashSet<String>(orderIngdetails);
-            System.out.println(orderSet);
+            //System.out.println(orderSet);
             int totalCorrectIng = 0;
             for(String ingredient : orderSet)
             {
@@ -216,19 +216,19 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
                 }
             }
             incorrect += order.size() - totalCorrectIng;
-            System.out.println(totalCorrectIng + "," + incorrect);
+            //System.out.println(totalCorrectIng + "," + incorrect);
             
             for(int index = 0; index < order.size(); index++){
                 if(!ocutdetails.get(index).equals(icutdetails.get(index)))
                 {
-                    System.out.println("Cut comparison" + ocutdetails.get(index) + "," + icutdetails.get(index));
+                    //System.out.println("Cut comparison" + ocutdetails.get(index) + "," + icutdetails.get(index));
                     incorrect += 1;
                 }
                 //else{
                 //    totalCorrectIng += 1;
                 //}
                 if(!ocookdetails.get(index).equals(icookdetails.get(index))){
-                    System.out.println("Cook comparison" + ocookdetails.get(index) + "," + icookdetails.get(index));
+                    //System.out.println("Cook comparison" + ocookdetails.get(index) + "," + icookdetails.get(index));
                     incorrect += 1;
                 }
                 //else{
@@ -236,7 +236,7 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
                 //}
             }
             float percent = (100*(order.size()*3-incorrect)/(order.size()*3));
-            System.out.println(incorrect + "," + percent);
+            System.out.println("Score: " + percent);
             return percent;
         }
     }
