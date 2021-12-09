@@ -154,7 +154,7 @@ public class Tile{
 	}
 
 	public void assembleItem(Item item){
-		items.add(item.getName()+","+item.getCut()+","+item.getCook());
+		items.add(item.getName() +","+ item.getCut() +","+ item.getCook());
 	}
 	
 	//Getters

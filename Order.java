@@ -44,7 +44,7 @@ class Bread extends OrderDecorator{
         this.order = order;
         this.price = order.getPrice() + 0.25;
         this.items = order.items;
-        items.add("Bread,"+cut+","+cook);
+        items.add("Bun,"+cut+","+cook+",");
     }
 }
 
@@ -53,7 +53,7 @@ class Patty extends OrderDecorator{
         this.order = order;
         this.price = order.getPrice() + 0.50;
         this.items = order.items;
-        items.add("Patty,"+cut+","+cook);
+        items.add("Patty,"+cut+","+cook+",");
     }
 }
 
@@ -62,7 +62,7 @@ class Lettuce extends OrderDecorator{
         this.order = order;
         this.price = order.getPrice() + 0.25;
         this.items = order.items;
-        items.add("Lettuce,"+cut+","+cook);
+        items.add("Lettuce,"+cut+","+cook+",");
     }
 }
 
@@ -71,7 +71,7 @@ class Tomato extends OrderDecorator {
         this.order = order;
         this.price = order.getPrice() + 0.25;
         this.items = order.items;
-        items.add("Tomato," + cut + "," + cook);
+        items.add("Tomato," + cut + "," + cook+",");
     }
 }
 
@@ -80,6 +80,6 @@ class Cheese extends OrderDecorator {
         this.order = order;
         this.price = order.getPrice() + 0.25;
         this.items = order.items;
-        items.add("Cheese," + cut + "," + cook);
+        items.add("Cheese," + cut + "," + cook+",");
     }
 }

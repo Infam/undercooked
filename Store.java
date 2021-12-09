@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.*;
 import java.awt.event.*;
+import java.lang.reflect.Array;
+import java.nio.charset.CoderResult;
 import java.util.HashSet;
 
 public class Store extends JPanel implements ActionListener, KeyListener, Subject {
@@ -204,7 +206,7 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
         }
     }
 
-    public int serveOrder(List<String> items){
+    public float serveOrder(List<String> items){
         List<String> order = ordered.get(0).items;
         ordered.remove(ordered.get(0));
         int score = 100;
@@ -220,40 +222,76 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
         }
 
         else{
-            HashSet<String> orderSet = new HashSet<String>(order);
-            
+            List<String> orderIngdetails = new ArrayList<String>();
+            List<String> ocutdetails = new ArrayList<String>();
+            List<String> ocookdetails = new ArrayList<String>();
+
+            List<String> itemingdetails = new ArrayList<String>();
+            List<String> icutdetails = new ArrayList<String>();
+            List<String> icookdetails = new ArrayList<String>();
+
+            for(String item : order){
+                String[] itemDetails = item.split("\\,");
+                orderIngdetails.add(itemDetails[0]);
+                ocutdetails.add(itemDetails[1]);
+                ocookdetails.add(itemDetails[2]);
+            }
+
+            for(String item: items){
+                String[] itemDetails = item.split("\\,");
+                itemingdetails.add(itemDetails[0]);
+                icutdetails.add(itemDetails[1]);
+                icookdetails.add(itemDetails[2]);
+            }
+
+            HashSet<String> orderSet = new HashSet<String>(orderIngdetails);
+            System.out.println(orderSet);
             int totalCorrectIng = 0;
             for(String ingredient : orderSet)
             {
-                String[] Odetails = ingredient.split("\\,");
-                System.out.println(Odetails[0]);
+                System.out.println(ingredient);
                 int correctNumIng = 0;
                 int itemNumIng = 0;
-                for(int index = 0; index < order.size(); index++){
-                    String[] Idetails = order.get(index).split("\\,");
-                    if(Odetails[0].equals(Idetails[0]))
+                for(int index = 0; index < items.size(); index++){
+                    if(ingredient.equals(orderIngdetails.get(index)))
                     {
                         correctNumIng += 1;
                     }
-                    if(Odetails[0].equals(Idetails[0]))
+                    if(ingredient.equals(itemingdetails.get(index)))
                     {
                         itemNumIng += 1;
                     }
                 }
                 if(itemNumIng >= correctNumIng){
-                    totalCorrectIng = correctNumIng;
+                    totalCorrectIng += correctNumIng;
                 }
-                System.out.println(correctNumIng + "," + itemNumIng);
-                incorrect += order.size() - totalCorrectIng;
+                else{
+                    totalCorrectIng += itemNumIng;
+                }
             }
+            incorrect += order.size() - totalCorrectIng;
+            System.out.println(totalCorrectIng + "," + incorrect);
             
             for(int index = 0; index < order.size(); index++){
-                if(order.get(index) != items.get(index)){
+                if(!ocutdetails.get(index).equals(icutdetails.get(index)))
+                {
+                    System.out.println("Cut comparison" + ocutdetails.get(index) + "," + icutdetails.get(index));
                     incorrect += 1;
                 }
+                //else{
+                //    totalCorrectIng += 1;
+                //}
+                if(!ocookdetails.get(index).equals(icookdetails.get(index))){
+                    System.out.println("Cook comparison" + ocookdetails.get(index) + "," + icookdetails.get(index));
+                    incorrect += 1;
+                }
+                //else{
+                //    totalCorrectIng += 1;
+                //}
             }
-            System.out.println(incorrect + "," + score * ((order.size()*2-incorrect)/order.size()));
-            return score * ((order.size()*2-incorrect)/order.size());
+            float percent = (100*(order.size()*3-incorrect)/(order.size()*3));
+            System.out.println(incorrect + "," + percent);
+            return percent;
         }
     }
 
