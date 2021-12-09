@@ -1,4 +1,6 @@
-//import java.util.Scanner;
+/*
+ * The player, which interacts with tiles and is controlled by the keyboard.
+ */
 import java.awt.event.KeyEvent;
 import java.awt.Graphics;
 import java.awt.event.KeyListener;
@@ -31,6 +33,7 @@ public class Player {
         loadImage();
     }
 
+    //Render the player on the grid
     private void loadImage(){
         String face;
         switch (facingdir) {
@@ -47,6 +50,7 @@ public class Player {
         }
     }
 
+    //Load image of whatever item the player is holding in front of them
     private void loadItemImage(){
 	    String itemName = item.getName();
 	    int cooklvl = item.getCook();
@@ -68,6 +72,7 @@ public class Player {
 	    }
     }
 
+    //draw the image
     public void draw(Graphics g, ImageObserver observer){
         loadImage();
         g.drawImage(image, point.x * Store.TILE_SIZE, point.y*Store.TILE_SIZE, observer);
@@ -77,6 +82,7 @@ public class Player {
         }
     }
 
+    //Update position based on key press
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_LEFT){
@@ -102,6 +108,7 @@ public class Player {
         }
     }
 
+    //Movement Logic
     public void moveLeft(){
         facingdir = 2;
         if(tileCheck()) {
@@ -111,6 +118,7 @@ public class Player {
         }
     }
 
+    //Movement Logic
     public void moveRight(){
         facingdir = 3;
         if(tileCheck()) {
@@ -120,6 +128,7 @@ public class Player {
         }
     }
 
+    //Movement Logic
     public void moveUp(){
         facingdir = 0;
         if(tileCheck()) {
@@ -129,6 +138,7 @@ public class Player {
         }
     }
 
+    //Movement Logic
     public void moveDown(){
         facingdir = 1;
         if(tileCheck()) {
@@ -138,6 +148,7 @@ public class Player {
         }
     }
 
+    //Update which tile the player is facing, so you know what you're interacting with.
     public void updateFacingTile(){
         int x = pos[1];
         int y = pos[0];
@@ -152,21 +163,24 @@ public class Player {
         facingtile = store.getGrid().getTile(x,y);
     }
 
-    public boolean tileCheck(){ //Make sure grid has nonfloor tiles on perimeter
+    //Make sure grid has nonfloor tiles on perimeter
+    public boolean tileCheck(){ 
         updateFacingTile();
         return facingtile.getType() == 0;
     }
 
+    //Interact with the facing tile
     public void interact(){
         facingtile.action();
     }
 
+    //place whatever you're holding on the tile in front of you.
     public void place(){
         if(item != null){ //if holding someting
             facingtile.holdingPlace(this);
         }
         else {
-	    System.out.println("Player is not holding anything. Placing Nothing Down...");
+	    //System.out.println("Player is not holding anything. Placing Nothing Down...");
             facingtile.emptyPlace(this);
         }
 

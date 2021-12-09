@@ -1,4 +1,9 @@
-//import java.util.Scanner;
+/*
+ * Tile is the java class that has interactions with the user and items.
+ * Every tile has its own strategy, which dictates how it functions.
+ * The player interacts with the tile by using the X and C keys
+ *
+*/
 import java.awt.event.KeyEvent;
 import java.awt.Graphics;
 import java.awt.event.KeyListener;
@@ -23,6 +28,7 @@ public class Tile{
 	private BufferedImage itemimage;
 	private Point point;
 
+	//Tile Creation. Depending on the type, each tile is given a specific strategy.
 	public Tile(int type, int x, int y){
 		this.type = type;
 		if (type == 0)
@@ -43,7 +49,8 @@ public class Tile{
 
 	}
 
-	public Tile(int type, int x, int y,String desc){ //dispenser will by type 1
+	//If the tile should be a dispenser type, also need the description of what it dispenses.
+	public Tile(int type, int x, int y,String desc){ //dispenser will be type 1
 		this.type = type;
 		this.dispenserDesc = desc;
 		this.item = new Item(desc);
@@ -52,6 +59,7 @@ public class Tile{
 		loadImage();
 	}
 
+	//Assembler constructor
 	public Tile(int type, int x, int y, Store store, List<String> holding){
 		this.items = holding;
 		this.type = type;
@@ -61,7 +69,7 @@ public class Tile{
 		loadImage();
 	}
 
-
+	//Strategy Pattern functions
 	public void action(){
 		strategy.action(this);
 	}
@@ -70,6 +78,7 @@ public class Tile{
 		strategy.update(this);
 	}
 
+	//Check if the tile is empty and can hold an item. If not and the player is holding something, swap the items.
 	public void holdingPlace(Player player) {
 		if(item != null){
 			strategy.swap(this, player);
@@ -79,19 +88,22 @@ public class Tile{
 		}
 	}
 
+	//If the player is not holding anything, try to take an item from the tile.
 	public void emptyPlace(Player player){
 		if(item != null){
-			System.out.println("Picking up a " + this.getItem().getName());
-			System.out.println("Cut lvl: " + this.getItem().getCut());
+			//System.out.println("Picking up a " + this.getItem().getName());
+			//System.out.println("Cut lvl: " + this.getItem().getCut());
 			strategy.pickup(this, player);
 		}
 	}
 
+	//Server the order
 	public void orderUp(){
 		store.serveOrder(items);
 		this.items.clear();
 	}
 
+	//load the image of the tile when requested.
 	private void loadImage(){
 		strategy.loadImage(this);
 	}
@@ -115,6 +127,7 @@ public class Tile{
 		this.image = image;
 	}
 
+	//Draw the tile image at the correct coordinate location.
 	public void draw(Graphics g, ImageObserver observer){
 		loadImage();
 		g.drawImage(image, point.x * Store.TILE_SIZE, point.y*Store.TILE_SIZE, observer);
@@ -124,6 +137,7 @@ public class Tile{
 		}
 	}
 
+	//Draw the item image on top of the tile, if there is one.
 	private void loadItemImage(){
 		String itemName = item.getName();
 		int cooklvl = item.getCook();
@@ -146,7 +160,6 @@ public class Tile{
 		}
 
 	}
-
 
 	public void setPosition(int x,int y){
 		position[0] = x;
