@@ -1,3 +1,6 @@
+/*
+ * Store is the main class that handles the majority of updating the grid, images, and player control.
+*/
 import javax.swing.*;
 import java.util.ArrayList;
 //import java.util.TimerTask;
@@ -26,29 +29,24 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
         setPreferredSize(new Dimension(TILE_SIZE*grid.getHeight(), TILE_SIZE*grid.getWidth()));
         setBackground(new Color(232, 232, 232));
 
-        //https://www.baeldung.com/java-timer-and-timertask
-        //TimerTask task = new TimerTask() {
-        //	public void run() {
-        //	    System.out.println("HELLO!");
-        //	}
-        //};
-
         //item update action
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 updateGrid();
-                //...Perform a task...
             }
         };
 
+    	//Initialize clock for update function call
         Timer clock = new Timer(5000, taskPerformer);
         clock.start();
 
+	//Timer for player movement and screen refresh
         timer = new Timer(DELAY, this);
         timer.start();
 
     }
 
+    //Initialize the store
     public void initStore(){
         register = 0.0;
         grid = new Grid(this);
@@ -59,6 +57,7 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
         this.observers = new ArrayList<>();
     }
 
+    //for every tile of the grid, update them if they have the update function.
     public void updateGrid(){
         for (int row = 0; row< grid.getHeight(); row++){
             for (int col = 0; col < grid.getWidth(); col++){
@@ -67,7 +66,7 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
                     grid.getTile(row, col).update();
             }
         }
-        System.out.println("Grid Updated!");
+        //System.out.println("Grid Updated!");
         /*System.out.println(ordered);
         for(int i = 0; i < ordered.size(); i++)
         {
@@ -76,6 +75,7 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
     }
 
     @Override
+    //if there was an action, repaint the screen.
     public void actionPerformed(ActionEvent e){
         if(Utility.percentage(0.002)){
             newOrder();
@@ -84,6 +84,7 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
     }
 
     @Override
+    //More drawing
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         //populateGrid(g);
@@ -106,75 +107,17 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
 
     }
 
+    // react to key down events
     public void keyPressed(KeyEvent e) {
-        // react to key down events
         player.keyPressed(e);
     }
 
     @Override
+    // react to key up events
     public void keyReleased(KeyEvent e) {
-        // react to key up events
     }
 
-    public static void main(String[] args){
-        Store s = new Store();
-        s.newOrder();
-        Player p = s.getPlayer();
-        s.printGrid();
-        System.out.println("Moving Up:");
-        p.moveUp();
-        s.printGrid();
-        System.out.println("Moving Down:");
-        p.moveDown();
-        s.printGrid();
-        System.out.println("Moving Left:");
-        p.moveLeft();
-        s.printGrid();
-        System.out.println("Moving Right:");
-        p.moveRight();
-        s.printGrid();
-        System.out.println("Getting Lettuce from dispenser:");
-        p.moveUp();
-        p.interact();
-        p.place();
-        System.out.println("Player is holding: " + p.getItem().getName());
-        s.printGrid();
-
-        System.out.println("Cutting lettuce at cutting board:");
-        p.moveDown();
-        p.moveRight();
-        p.moveUp();
-        s.printGrid();
-        p.place();
-        p.interact();
-        p.place();
-        System.out.println("Player is holding: " + p.getItem().getName());
-        System.out.println("Item cut level: " + p.getItem().getCut());
-
-        System.out.println("Grilling lettuce at grill:");
-        p.moveDown();
-        p.moveDown();
-        p.moveDown();
-        s.printGrid();
-        p.place();
-        p.interact();
-        p.place();
-        System.out.println("Player is holding: " + p.getItem().getName());
-        System.out.println("Item grill level: " + p.getItem().getCook());
-
-        System.out.println("Throwing lettuce away:");
-        p.moveUp();
-        p.moveRight();
-        p.moveDown();
-        s.printGrid();
-        p.place();
-        p.interact();
-        p.place();
-        System.out.println("Player is holding: " + p.getItem());
-
-    }
-
-
+    //Initialize the player
     public void initPlayer(int x, int y, int facing){ //facing:{0,1,2,3} = {up, down, left, right}
         int[] pos;
         Tile facingtile;
@@ -189,9 +132,11 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
             case (3) -> grid.getTile(x + 1, y);
             default -> grid.getTile(x, y + 1);
         };
+    	//set the facing tile, and call the constructor
         this.player = new Player(this, pos, facing, facingtile);
     }
 
+    //Create a new order
     public void newOrder(){
         if(ordered.size() < 5){
             Order neworder = orderFactory.createOrder();
@@ -204,6 +149,7 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
         }
     }
 
+    //Check if the order is correct, and give points based on how right it is
     public int serveOrder(List<String> items){
         List<String> order = ordered.get(0).items;
         ordered.remove(ordered.get(0));
@@ -257,6 +203,7 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
         }
     }
 
+    //Populate the grid with images. Maps grid to GUI.
     private void populateGrid(Graphics g){
         int type;
         for (int row = 0; row<grid.getHeight(); row++){
@@ -290,6 +237,7 @@ public class Store extends JPanel implements ActionListener, KeyListener, Subjec
     }
 
 
+    //Observer Pattern
     public void registerObserver(Observer o){
         observers.add(o);
     }

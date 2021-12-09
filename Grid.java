@@ -1,3 +1,7 @@
+/*
+ * Grid is the combination class that holds all the tiles together and relates their coordinates.
+ * The grid doesn't do much on its own, and essentially just acts like a data structure.
+*/
 import java.util.List;
 import java.util.ArrayList;
 
@@ -13,6 +17,8 @@ public class Grid{
 
 	public Grid(Store store){
 		this.store = store;
+
+		//The actual grid for the world. This can be editted to change tile types.
 		worldgrid = new int[][]
 			{{6,10, 11, 12, 13, 14, 2, 2, 6},
 			 {6, 0, 0, 0, 0, 0, 0, 0, 6},
@@ -23,6 +29,8 @@ public class Grid{
 			};
 		
 		worldtiles = new Tile[worldgrid.length][worldgrid[0].length];
+
+		//Create tiles for every location in the matrix.
 		for(int i = 0; i < worldtiles.length; i++){
 			for(int j = 0; j < worldtiles[0].length; j++){
 				if(worldgrid[i][j] >= 10){
